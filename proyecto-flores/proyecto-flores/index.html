@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#1b1408">
+<title>Para Valeria 🌻</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="app">
+    <div class="card" id="card">
+
+      <canvas id="fireflies" aria-hidden="true"></canvas>
+
+      <div id="scene">
+
+        <!-- Árbol: tallo + ramas -->
+        <div id="tree" aria-hidden="true">
+          <div id="stem"></div>
+          <div id="branches"></div>
+        </div>
+
+        <!-- Flores: nacen en las ramas y luego forman el corazón -->
+        <div id="flowers" aria-hidden="true"></div>
+
+        <!-- Pétalos / flores cayendo -->
+        <div id="falling" aria-hidden="true"></div>
+
+        <!-- Pantalla inicial -->
+        <div id="intro">
+          <p id="para-quien"></p>
+          <button id="sunflower-wrap" type="button" aria-label="Toca el girasol para comenzar">
+            <span class="glow" aria-hidden="true"></span>
+            <span id="sunflower-emoji" aria-hidden="true">🌻</span>
+          </button>
+          <p class="intro-text" id="intro-line1">Hay algo que quiero regalarte...</p>
+          <p class="intro-text intro-hint" id="intro-line2">Toca el girasol 🌻</p>
+        </div>
+
+        <!-- Mensaje romántico -->
+        <div id="message" aria-live="polite"></div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

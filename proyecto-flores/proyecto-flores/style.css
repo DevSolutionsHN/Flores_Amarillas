@@ -1,0 +1,472 @@
+/* =========================================================
+   PARA TI 🌻 — hoja de estilos
+   Paleta: dorado / amarillo girasol / verde oscuro cálido
+   ========================================================= */
+
+:root{
+  --bg-void:        #0f0a05;
+  --bg-deep:        #1b1408;
+  --bg-warm:        #2a1d0d;
+  --green-deep:     #1e2f16;
+  --green-mid:      #345225;
+  --gold:           #f2b53c;
+  --gold-soft:      #f7d27a;
+  --yellow:         #ffce3a;
+  --yellow-light:   #ffe38a;
+  --cream:          #fbf3df;
+  --cream-dim:      #e9dcc0;
+
+  --font-display:   Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --font-body:       'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  --card-max: 480px;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-void);
+  overflow: hidden;
+}
+
+body{
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+#app{
+  min-height: 100dvh;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: radial-gradient(ellipse at 50% 0%, #241a0d 0%, var(--bg-void) 70%);
+}
+
+/* La "tarjeta": en móvil ocupa toda la pantalla, en escritorio queda
+   centrada como una experiencia tipo teléfono para que nunca se vea
+   vacía o estirada en pantallas grandes. */
+.card{
+  position: relative;
+  width: 100%;
+  max-width: var(--card-max);
+  min-height: 100dvh;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(255,206,58,0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-warm) 55%, #140d05 100%);
+  box-shadow: 0 0 80px rgba(0,0,0,0.65);
+}
+
+#fireflies{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#scene{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------
+   INTRO
+   --------------------------------------------------------- */
+#intro{
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px;
+  text-align: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#intro.is-hidden{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#para-quien{
+  margin: 0 0 6px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--cream-dim);
+  opacity: 0.75;
+}
+
+#sunflower-wrap{
+  position: relative;
+  border: none;
+  background: none;
+  padding: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sunflower-wrap .glow{
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,206,58,0.55) 0%, rgba(255,206,58,0) 70%);
+  animation: glowPulse 3.2s ease-in-out infinite;
+}
+
+#sunflower-emoji{
+  position: relative;
+  display: inline-block;
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 0 14px rgba(255, 206, 58, 0.55));
+  animation: sway 4.5s ease-in-out infinite;
+  transform-origin: 50% 85%;
+}
+
+#sunflower-wrap.is-tapped #sunflower-emoji{
+  animation: none;
+}
+
+.intro-text{
+  margin: 0;
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.5;
+  max-width: 30ch;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.4);
+}
+
+.intro-hint{
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--gold-soft);
+  opacity: 0.85;
+  animation: hintPulse 2.4s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------
+   ÁRBOL
+   --------------------------------------------------------- */
+#tree{
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transition: opacity 1.1s ease;
+}
+
+/* El tallo pasa a segundo plano cuando se forma el corazón, pero sigue
+   viéndose con claridad — antes se apagaba casi del todo (0.16) y daba
+   la sensación de que desaparecía por completo. */
+#tree.is-background{
+  opacity: 0.45;
+}
+
+#stem{
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 13px;
+  height: 0;
+  transform: translateX(-50%);
+  background:
+    repeating-linear-gradient(180deg, rgba(0,0,0,0.14) 0 3px, transparent 3px 7px),
+    linear-gradient(180deg, var(--green-mid) 0%, var(--green-deep) 60%, #2b1c0d 100%);
+  clip-path: polygon(24% 0%, 76% 0%, 100% 100%, 0% 100%);
+  border-radius: 3px 3px 1px 1px;
+  box-shadow: 0 0 10px rgba(60, 90, 30, 0.5);
+  transition: height 1.6s cubic-bezier(.16, 1, .3, 1);
+  transform-origin: bottom center;
+  animation: stemSway 5s ease-in-out infinite;
+}
+
+/* Resplandor suave donde el tallo "nace" del suelo, para que no se vea
+   como una línea flotando sino como algo enraizado. */
+#stem::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 50px;
+  height: 14px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(116, 201, 90, 0.35), transparent 70%);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+#branches{
+  position: absolute;
+  inset: 0;
+}
+
+/* Hojas: se apoyan por su esquina inferior izquierda (el pecíolo) en el
+   punto donde nacen del tallo, y se despliegan (escala 0 -> 1) al
+   florecer. Base redondeada junto al tallo y punta afilada hacia afuera,
+   como una hoja real (antes eran casi una almendra simétrica, por eso no
+   se leían como hojas). El ángulo (--rot) y el espejo (--flip: 1 o -1)
+   las alternan a los lados. */
+.leaf{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--lw, 46px);
+  height: var(--lh, 53px);
+  background: linear-gradient(155deg, #5fae46 0%, var(--green-mid) 48%, var(--green-deep) 100%);
+  border-radius: 60% 6% 60% 60%;
+  box-shadow:
+    inset -6px -6px 12px rgba(0,0,0,0.24),
+    inset 3px 3px 8px rgba(255,255,255,0.08),
+    0 3px 10px rgba(0,0,0,0.28);
+  transform-origin: 0% 100%;
+  transform: rotate(var(--rot, -30deg)) scaleX(var(--flip, 1)) scale(0);
+  transition: transform 0.9s cubic-bezier(.3, 1.5, .35, 1);
+}
+
+.leaf.is-grown{
+  transform: rotate(var(--rot, -30deg)) scaleX(var(--flip, 1)) scale(1);
+}
+
+/* Pecíolo: el tallito corto que une la hoja con el tallo principal. */
+.leaf::before{
+  content: "";
+  position: absolute;
+  left: -13px;
+  bottom: 1px;
+  width: 16px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green-deep), var(--green-mid));
+  border-radius: 3px;
+  transform-origin: 100% 50%;
+  transform: rotate(10deg);
+}
+
+.leaf::after{
+  content: "";
+  position: absolute;
+  left: 6%;
+  bottom: 4%;
+  width: 2px;
+  height: 84%;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+  transform-origin: bottom left;
+  transform: rotate(16deg);
+}
+
+/* ---------------------------------------------------------
+   FLORES (nacen en el árbol y forman el corazón)
+   --------------------------------------------------------- */
+#flowers{
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+}
+
+.flower{
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  transition: transform 0.9s cubic-bezier(.45,.05,.2,1);
+}
+
+.flower-emoji{
+  display: inline-block;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: var(--fs, 22px);
+  filter: drop-shadow(0 0 6px rgba(255, 206, 58, 0.45));
+  animation: bloomIn 0.55s cubic-bezier(.2,1.4,.4,1) forwards;
+  animation-delay: var(--d, 0s);
+}
+
+.flower-emoji.idle-sway{
+  animation: bloomIn 0.55s cubic-bezier(.2,1.4,.4,1) forwards, drift 5s ease-in-out infinite;
+  animation-delay: var(--d, 0s), 0s;
+}
+
+#flowers.is-beating .flower-emoji{
+  animation: heartBeat 0.85s ease-in-out 2;
+}
+
+/* ---------------------------------------------------------
+   LLUVIA DE FLORES
+   --------------------------------------------------------- */
+#falling{
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.petal{
+  position: absolute;
+  top: -40px;
+  left: var(--x, 50%);
+  font-size: var(--size, 16px);
+  opacity: 0.9;
+  animation: fall var(--dur, 9s) linear forwards;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(0 0 4px rgba(255, 206, 58, 0.3));
+}
+
+/* ---------------------------------------------------------
+   MENSAJE
+   --------------------------------------------------------- */
+#message{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  padding: 26px 26px 34px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+  background: linear-gradient(0deg, rgba(15,10,5,0.75) 20%, rgba(15,10,5,0) 100%);
+}
+
+#message.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#message p{
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--cream);
+  text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+}
+
+#message p:last-child{ margin-bottom: 0; }
+
+/* ---------------------------------------------------------
+   MÚSICA
+   --------------------------------------------------------- */
+#music-toggle{
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 40;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,206,58,0.35);
+  background: rgba(15,10,5,0.55);
+  color: var(--gold-soft);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease;
+}
+
+#music-toggle.is-shown{
+  opacity: 1;
+  transform: scale(1);
+}
+
+#music-toggle:focus-visible,
+#sunflower-wrap:focus-visible{
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   KEYFRAMES
+   --------------------------------------------------------- */
+@keyframes sway{
+  0%, 100%{ transform: rotate(-4deg); }
+  50%{ transform: rotate(4deg); }
+}
+
+@keyframes stemSway{
+  0%, 100%{ transform: translateX(-50%) rotate(-1deg); }
+  50%{ transform: translateX(-50%) rotate(1deg); }
+}
+
+@keyframes glowPulse{
+  0%, 100%{ opacity: 0.55; transform: scale(1); }
+  50%{ opacity: 0.9; transform: scale(1.12); }
+}
+
+@keyframes hintPulse{
+  0%, 100%{ opacity: 0.5; }
+  50%{ opacity: 1; }
+}
+
+@keyframes bloomIn{
+  0%{ transform: translate(-50%, -50%) scale(0) rotate(-25deg); }
+  100%{ transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+@keyframes drift{
+  0%, 100%{ transform: translate(-50%, -50%) scale(1) rotate(-4deg); }
+  50%{ transform: translate(-50%, -50%) scale(1) rotate(4deg); }
+}
+
+@keyframes heartBeat{
+  0%, 100%{ transform: translate(-50%, -50%) scale(1); }
+  30%{ transform: translate(-50%, -50%) scale(1.28); }
+  55%{ transform: translate(-50%, -50%) scale(0.96); }
+}
+
+@keyframes fall{
+  0%{ transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  8%{ opacity: 0.9; }
+  100%{ transform: translate(var(--drift, 20px), 112vh) rotate(var(--rot, 220deg)); opacity: 0.7; }
+}
+
+/* ---------------------------------------------------------
+   ACCESIBILIDAD: respeta "reducir movimiento"
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  #sunflower-emoji,
+  .glow,
+  .intro-hint,
+  #stem,
+  .flower-emoji.idle-sway{
+    animation: none !important;
+  }
+  #stem, .leaf, .flower, #message, #tree, #music-toggle, #intro{
+    transition-duration: 0.2s !important;
+  }
+  .petal{
+    animation-duration: 6s !important;
+  }
+}
+
+/* Pantallas muy bajas (móviles en horizontal) */
+@media (max-height: 560px){
+  #sunflower-emoji{ font-size: 46px; }
+  .intro-text{ font-size: 16px; }
+  #message p{ font-size: 14px; }
+}
